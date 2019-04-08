@@ -5,21 +5,18 @@ window.lol = {
     });
   },
   filterChampionsRoles: (rol, arrChampions) => {
-    const newArray = arrChampions.map((elem) => {
-      return elem;
-    });
-    const arrFiltered = newArray.filter((championRol) => {
+    const arrFilteredRol = arrChampions.filter((championRol) => {
       return championRol.rol[0] === rol || championRol.rol[1] === rol;
     });
-    return arrFiltered;
+    return arrFilteredRol;
   },
   filterChampionsMana: (arr, minNumber, maxNumber) => {
-    const arrFiltered = arr.filter((elem) => {
+    const arrFilteredMana = arr.filter((elem) => {
       if (minNumber <= elem.mana && elem.mana <= maxNumber) {
         return elem.mana;
       }
     });
-    return arrFiltered;
+    return arrFilteredMana;
   },
   statOfChampions: (arr, caract, value) => {
     const newArray = arr.map((statistic) => {
@@ -40,29 +37,19 @@ window.lol = {
     return number;
   },
   sortChampionsCards: (sortChamps, arr) => {
-    const nuevoarray = arr.map(function (objCampeon) {
-      return objCampeon;
+    let nuevoarray = arr.map(objCampeon => objCampeon).sort((firstName, secondName) => {
+      if (firstName.name > secondName.name) {
+        return 1;
+      } else if (firstName.name < secondName.name) {
+        return -1;
+      } else {
+        return 0;
+      }
     });
     if (sortChamps === 'az') {
-      nuevoarray.sort(function (firstName, secondName) {
-        if (firstName.name > secondName.name) {
-          return 1;
-        } else if (firstName.name < secondName.name) {
-          return -1;
-        } else {
-          return 0;
-        }
-      });
+      return nuevoarray;
     } else if (sortChamps === 'za') {
-      nuevoarray.sort((firstName, secondName) => {
-        if (firstName.name > secondName.name) {
-          return -1;
-        } else if (firstName.name < secondName.name) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
+      nuevoarray.reverse();
     }
     return nuevoarray;
   }
