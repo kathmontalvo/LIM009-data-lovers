@@ -70,7 +70,7 @@ label {
     margin-left: 10%;
 }
 
-aside input, aside select {
+.aside input, .aside select {
     width: 150px;
 }
 
@@ -169,5 +169,6 @@ aside input, aside select {
 @media screen and (min-width:1440px) {
     .nav-area {
         font-size: 25px;
+        padding: 5%;
     }
 }

@@ -56,10 +56,6 @@ h1 {
   cursor: pointer;
 }
 
-.btn-nav:focus {
-  outline: 0;
-}
-
 @media screen and (min-width:768px) {
   .nav-main, .nav-menu {
     width: 42%;

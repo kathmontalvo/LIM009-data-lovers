@@ -7,16 +7,15 @@
     font-size: 50px;
 }
 
-.champion-info-rol {
+.champion-info-rol, .champion-info-title {
     font-size: 30px;
-    padding: 20px;
+    padding-top: 20px;
 }
 
-.info-general {
+.champ-info {
     font-size: 20px;
-    list-style: none;
+    width: 40%;
 }
-
 .champ-descrip {
     padding-top: 1em;
     font-size: 20px;

@@ -41,6 +41,9 @@ footer {
   border-top: 1px solid rgba(245, 245, 245, 0.397);
 }
 
+button:focus {
+  outline: 0;
+}
 .cont-chart{
   width: 100%;
 }
