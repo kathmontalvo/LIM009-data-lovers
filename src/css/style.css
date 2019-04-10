@@ -40,3 +40,11 @@ footer {
   color: white;
   border-top: 1px solid rgba(245, 245, 245, 0.397);
 }
+
+.cont-chart{
+  width: 100%;
+}
+.chart{
+  width: 200px;
+  height: 200px;
+}

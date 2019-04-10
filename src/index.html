@@ -17,6 +17,7 @@
       <ul>
         <li><button id="btn-home" class="btn-nav">Home</button></li>
         <li><button id="btn-champs" class="btn-nav">Champions</button></li>
+        <li><button id="btn-stats" class="btn-nav">Statistics</button></li>
         <li><button id="btn-contact" class="btn-nav">Contact us</button></li>
       </ul>
     </div>
@@ -87,18 +88,21 @@
           <p class="stat-value"> AD max: <span id="adchamp-max"></span></p>
         </div>
       </form>
+      <div id="stat-chart" class="cont-chart">
+      </div>
     </aside>
     <h2 class="title">CHAMPIONS</h2>
-
     <div id="champions" class="champions hide"></div>
     <div id="info-champions" class="info-champions"></div>
-
   </main>
+  <section class="container hide" id="stats-pg">
+  </section>
   <footer>
     <p>Made by Kath&Nina ©️ LeagueFic 2019 </p>
   </footer>
   <script src="data.js"></script>
   <script src="main.js"></script>
+  <script src="../node_modules/chart.js/dist/Chart.js"></script>
 </body>
 
 </html>

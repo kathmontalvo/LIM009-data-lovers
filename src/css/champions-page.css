@@ -139,6 +139,7 @@ aside input, aside select {
     .nav-area {
         margin: 5%;
         font-size: 16px;
+        padding: 5%;
         padding-left: 10%;
     }
 }
