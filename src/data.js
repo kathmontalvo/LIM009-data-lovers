@@ -22,7 +22,7 @@ window.lol = {
     const newArray = arr.map((statistic) => {
       if (caract === 'ad') {
         return statistic.attack;
-      } else if (caract === 'hp') {
+      } else {
         return statistic.hp;
       }
     });
@@ -48,7 +48,7 @@ window.lol = {
     });
     if (sortChamps === 'az') {
       return nuevoarray;
-    } else if (sortChamps === 'za') {
+    } else {
       nuevoarray.reverse();
     }
     return nuevoarray;

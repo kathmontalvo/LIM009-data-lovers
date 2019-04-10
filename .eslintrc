@@ -8,7 +8,8 @@
   "extends": "eslint:recommended",
   "globals": {
     "LOL": false,
-    "lol": false
+    "lol": false,
+    "Chart": false
   },
   "rules": {
     "allowTernary": true,

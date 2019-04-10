@@ -52,7 +52,7 @@
     text-align: center;
 }
 
-main, nav {
+main {
     overflow: hidden;
     background-color: #23231A;
 }
@@ -78,6 +78,10 @@ label {
     .card {
         width: 25%;
         margin: 0.5em;
+    }
+    .stat-aside { 
+        top: 50px !important;
+        background-color: beige !important;
     }
     .champion-img {
         width: 100%;

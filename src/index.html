@@ -9,19 +9,19 @@
 </head>
 
 <body>
-  <nav class="nav-bar" id="nav-bar">
+  <header class="nav-bar" id="nav-bar">
     <div class="nav-main">
-      <h1 class="head-nav">LeagueFic</h1>
+      <h1 class="head-nav font-one">LEAGUEFIC</h1>
     </div>
-    <div class="nav-menu">
+    <nav class="nav-menu">
       <ul>
         <li><button id="btn-home" class="btn-nav">Home</button></li>
         <li><button id="btn-champs" class="btn-nav">Champions</button></li>
         <li><button id="btn-stats" class="btn-nav">Statistics</button></li>
         <li><button id="btn-contact" class="btn-nav">Contact us</button></li>
       </ul>
-    </div>
-  </nav>
+    </nav>
+  </header>
 
   <section class="container" id="welcome-pg">
     <video id="hero-vid" autoplay="autoplay" loop="loop" muted="muted">
@@ -31,11 +31,11 @@
     </video>
     <div class="welcome-text center-content">
       <img class="logo-img" src="assets/lol-white-logo.png" alt="Logo League of Legends" />
-      <p class="intro-margin">This is what you need to become a better LOL player</p>
+      <p class="intro-margin font-two">This is what you need to become a better LOL player</p>
       <button class="btn-init" id="btn-init">GO TO CHAMPIONS</button>
     </div>
   </section>
-  <section class="container tut-pg" id="tut-pg">
+  <section class="container tut-pg font-two" id="tut-pg">
     <h2>Watch this video and start to play!</h2>
     <iframe class="video-tut" src="https://www.youtube.com/embed/WWa5uAzYDkQ"
       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture">
@@ -96,12 +96,13 @@
         <div id="stat-chart" class="cont-chart"></div>
     </div>
   </main>
-  <section class="container hide" id="stats-pg">
-    <aside>
-      <button>Top 5 by HP</button>
-      <button>Top 5 by MP</button>
-      <button>Top 5 by AD</button>
+  <section class="stats-pg container hide" id="stats-pg">
+    <aside class="aside stat-aside">
+      <button id="btn-hp" class="nav-area">Top 5 by HP</button>
+      <button id="btn-mp" class="nav-area">Top 5 by MP</button>
+      <button id="btn-ad" class="nav-area">Top 5 by AD</button>
     </aside>
+    <figure id="stat-chart-champs" class="chart-general"></figure>
   </section>
   <footer>
     <p>Made by Kath&Nina ©️ LeagueFic 2019 </p>

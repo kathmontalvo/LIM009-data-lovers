@@ -10,7 +10,7 @@ const maxAd = document.getElementById('adchamp-max');
 const welcomePage = document.getElementById('welcome-pg');
 const tutPage = document.getElementById('tut-pg');
 const championsPage = document.getElementById('champions-pg');
-const statsPage = document.getElementById('stats-pg')
+const statsPage = document.getElementById('stats-pg');
 const btnInit = document.getElementById('btn-init');
 const btnTut = document.getElementById('btn-tut');
 const navFilterAndSearch = document.getElementById('nav-filter-search');
@@ -20,7 +20,7 @@ const asideStats = document.getElementById('aside');
 const search = document.getElementById('search');
 const btnHome = document.getElementById('btn-home');
 const btnChamps = document.getElementById('btn-champs');
-const btnStats = document.getElementById('btn-stats')
+const btnStats = document.getElementById('btn-stats');
 const infoChampionPage = document.getElementById('info-champions-pg');
 
 // Elementos donde se imprimirá info de templates
@@ -57,11 +57,9 @@ const printMainInfo = (div) => {
     fetch('data/lol/lol.json')
       .then(res => res.json())
       .then(championsData => {
-        console.log(championsData)
         const listOfChampions = Object.entries(championsData.data);
         listOfChampions.filter((obj) => {
           if (atribId === obj[1].id) {
-            console.log(Object.values(obj[1].info))
             const string = `
       <figure class="champ-img">
       <img class="champion-info-img"src=${obj[1].splash} alt=${obj[1].name}>
@@ -126,7 +124,7 @@ const statOfChamps = (arr) => {
 };
 
 const statInfoChart = obj => {
-  const string = `<canvas id="chart-top" class="chart">`
+  const string = '<canvas id="chart-top" class="chart">';
   document.getElementById('champ-info').innerHTML = string;
   const ctx = document.getElementById('chart-top').getContext('2d');
   const chart = new Chart(ctx, {
@@ -150,50 +148,63 @@ const statInfoChart = obj => {
         }
       }
     }
-  })
-}
-const statChart = arr => {
-  const string = `<canvas id="chart-top" class="chart">`
-  document.getElementById('stat-chart').innerHTML = string;
-
-  const arrOrderHp = arr.sort((a, b) => {
-    return b.hp - a.hp
   });
-  const arrTop = arrOrderHp.map(obj => {
-    return obj.hp
-  }).slice(0, 5);
-  const champNames = arrOrderHp.map(obj => {
-    return obj.name
-  }).slice(0, 5);
-  console.log(arrOrderHp);
-  const ctx = document.getElementById('chart-top').getContext('2d');
-  // ctx.innerHTML=''
-  const chart = new Chart(ctx, {
-    type: 'horizontalBar',
-    data: {
-      labels: champNames,
-      datasets: [{
-        label: 'my dataset',
-        data: arrTop,
-        backgroundColor: 'whitesmoke',
-        // borderColor: 'blue',
-        // borderJoinStyle: 'miter',
-        // pointHitRadius: 10,
-      }]
-    },
-    options: {
-      scales: {
-        xAxes: [{
-          ticks: {
-            beginAtZero: true,
+  return chart;
+};
+
+const statChart = (stat) => {
+  const string = '<canvas id="chart-top-stat" class="chart">';
+  document.getElementById('stat-chart-champs').innerHTML = string;
+  fetch('data/lol/lol.json')
+    .then(res => res.json())
+    .then(championsData => {
+      const arr = Object.entries(championsData.data);
+      const arrOrder = arr.sort((first, second) => {
+        return second[1]['stats'][stat] - first[1]['stats'][stat];
+      });
+      const arrTop = arrOrder.map(obj => {
+        return obj[1]['stats'][stat];
+      }).slice(0, 5);
+      const champNames = arrOrder.map(obj => {
+        return obj[1]['name'];
+      }).slice(0, 5);
+      const ctx = document.getElementById('chart-top-stat').getContext('2d');
+      const chart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+          labels: champNames,
+          datasets: [{
+            label: 'TOP 5 BY ' + stat.toUpperCase(),
+            data: arrTop,
+            backgroundColor: 'rgba(128, 81, 81, 0.397)',
+          // borderColor: 'blue',
+          // borderJoinStyle: 'miter',
+          // pointHitRadius: 10,
+          }]
+        },
+        options: {
+          scales: {
+            xAxes: [{
+              ticks: {
+                beginAtZero: true,
+              }
+            }]
           }
-        }]
-      }
-    }
+        }
+      });
+      return chart;
+    });
+};
 
-  })
-}
-
+document.getElementById('btn-hp').addEventListener('click', () => {
+  statChart('hp');
+});
+document.getElementById('btn-mp').addEventListener('click', () => {
+  statChart('mp');
+});
+document.getElementById('btn-ad').addEventListener('click', () => {
+  statChart('attackdamage');
+});
 const funcFilterAndSort = () => {
   fetch('data/lol/lol.json')
     .then(res => res.json())
@@ -243,7 +254,7 @@ btnHome.addEventListener('click', () => {
   tutPage.classList.remove('hide');
   championsPage.classList.add('hide');
   infoChampionPage.classList.add('hide');
-  statsPage.classList.add('hide')
+  statsPage.classList.add('hide');
 });
 
 btnStats.addEventListener('click', () => {
@@ -251,12 +262,13 @@ btnStats.addEventListener('click', () => {
   tutPage.classList.add('hide');
   championsPage.classList.add('hide');
   infoChampionPage.classList.add('hide');
-  statsPage.classList.remove('hide')
-})
+  statsPage.classList.remove('hide');
+  statChart('hp');
+});
 const funcHideAndShow = () => {
   welcomePage.classList.add('hide');
   tutPage.classList.add('hide');
-  statsPage.classList.add('hide')
+  statsPage.classList.add('hide');
   championsPage.classList.remove('hide');
   championsListElement.classList.remove('hide');
   infoChampionPage.classList.add('hide');
