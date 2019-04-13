@@ -6,7 +6,11 @@ window.lol = {
   },
   filterChampionsRoles: (rol, arrChampions) => {
     const arrFilteredRol = arrChampions.filter((championRol) => {
-      return championRol.rol[0] === rol || championRol.rol[1] === rol;
+      if (championRol.rol[0] === rol || championRol.rol[1] === rol) {
+        return championRol.rol[0] === rol || championRol.rol[1] === rol;
+      } else if ('default' === rol) {
+        return championRol;
+      }
     });
     return arrFilteredRol;
   },

@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LeagueFic</title>
   <link rel="stylesheet" href="css/style.css" />
+
 </head>
 
 <body>
@@ -22,7 +23,6 @@
       </ul>
     </nav>
   </header>
-
   <section class="container" id="welcome-pg">
     <video id="hero-vid" autoplay="autoplay" loop="loop" muted="muted">
       <source
@@ -42,7 +42,6 @@
     </iframe>
     <button class="btn-init" id="btn-tut">GO TO CHAMPIONS</button>
   </section>
-
   <main class="container hide" id="champions-pg">
     <header id="nav-filter-search" class="navbar-inverse hide">
       <div class="nav-stats">
@@ -53,8 +52,9 @@
         <button id="btn-search" class="btn-champions">Search</button>
       </div>
     </header>
+
     <aside class="aside hide" id="aside">
-      <form>
+      <form id="filter-form">
         <div class="nav-area ">
           <label class="style-filter" for="rol">Roles</label>
           <select name="rol" id="rol">
@@ -92,20 +92,21 @@
     <h2 class="title">CHAMPIONS</h2>
     <div id="champions" class="champions hide"></div>
     <div id="info-champions-pg">
-        <div id="info-champions" class="info-champions"></div>
-        <div id="stat-chart" class="cont-chart"></div>
+      <div id="info-champions" class="info-champions"></div>
+      <div id="stat-chart" class="cont-chart"></div>
     </div>
   </main>
   <section class="stats-pg container hide" id="stats-pg">
     <aside class="aside stat-aside">
       <button id="btn-hp" class="nav-area">Top 5 by HP</button>
       <button id="btn-mp" class="nav-area">Top 5 by MP</button>
-      <button id="btn-ad" class="nav-area">Top 5 by AD</button>
+      <button id="btn-adamage" class="nav-area">Top 5 by AD</button>
     </aside>
     <figure id="stat-chart-champs" class="chart-general"></figure>
   </section>
   <footer>
-    <p>Made by Kath&Nina ©️ LeagueFic 2019 </p>
+    <p>Made by Kath&Nina | LeagueFic 2019 </p>
+
   </footer>
   <script src="data.js"></script>
   <script src="main.js"></script>

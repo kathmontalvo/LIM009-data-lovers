@@ -585,6 +585,9 @@ describe('lol', () => {
         ]
       );
     });
+    test('debería devolver el array filtrado por rol en valor default', () => {
+      expect(lol.filterChampionsRoles('default', lol.getNameAndImageOfChampion(arrChampions))).toEqual(lol.getNameAndImageOfChampion(arrChampions));
+    });
   });
   describe('lol.filterChampionsMana', () => {
     test('debería ser una función', () => {

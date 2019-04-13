@@ -1,33 +1,16 @@
-// Elementos del DOM
-const selectRoles = document.getElementById('rol');
-const sortChampions = document.getElementById('sort');
-const minNumber = document.getElementById('min-number');
-const maxNumber = document.getElementById('max-number');
-const minHp = document.getElementById('hp-min');
-const maxHp = document.getElementById('hp-max');
-const minAd = document.getElementById('adchamp-min');
-const maxAd = document.getElementById('adchamp-max');
-const welcomePage = document.getElementById('welcome-pg');
-const tutPage = document.getElementById('tut-pg');
-const championsPage = document.getElementById('champions-pg');
-const statsPage = document.getElementById('stats-pg');
-const btnInit = document.getElementById('btn-init');
-const btnTut = document.getElementById('btn-tut');
-const navFilterAndSearch = document.getElementById('nav-filter-search');
-const btnSearch = document.getElementById('btn-search');
-const btnFilterSort = document.getElementById('btn-filter-sort');
-const asideStats = document.getElementById('aside');
-const search = document.getElementById('search');
-const btnHome = document.getElementById('btn-home');
-const btnChamps = document.getElementById('btn-champs');
-const btnStats = document.getElementById('btn-stats');
-const infoChampionPage = document.getElementById('info-champions-pg');
+let dataLol = [];
+const getJson = (datajson) => {
+  fetch(datajson)
+    .then(response => response.json())
+    .then(total => {
+      return dataLol = Object.entries(total.data);
+    });
+};
+getJson('data/lol/lol.json');
 
-// Elementos donde se imprimirá info de templates
 const championsListElement = document.getElementById('champions');
 const infoChampion = document.getElementById('info-champions');
 
-// Func para imprimir a campeones en pantalla
 const printCardsOfChampions = (arrChampions) => {
   championsListElement.innerHTML = '';
   arrChampions.forEach((obj) => {
@@ -43,27 +26,19 @@ const printCardsOfChampions = (arrChampions) => {
     const div = document.createElement('div');
     div.innerHTML = string;
     div.className = 'card';
-    div.id = 'card';
     championsListElement.appendChild(div);
     printMainInfo(div);
   });
 };
-
 const printMainInfo = (div) => {
   const printName = div.querySelector('[name=\'champs\']');
   printName.addEventListener('click', () => {
     infoChampion.innerHTML = '';
     const atribId = printName.getAttribute('id');
-    fetch('data/lol/lol.json')
-      .then(res => res.json())
-      .then(championsData => {
-        const listOfChampions = Object.entries(championsData.data);
-        listOfChampions.filter((obj) => {
-          if (atribId === obj[1].id) {
-            const string = `
-      <figure class="champ-img">
-      <img class="champion-info-img"src=${obj[1].splash} alt=${obj[1].name}>
-      </figure>
+    dataLol.filter((obj) => {
+      if (atribId === obj[1].id) {
+        const string = `
+      <figure class="champ-img"><img class="champion-info-img"src=${obj[1].splash} alt=${obj[1].name}></figure>
       <section class="info-gnrl">
       <div class="champion-info-name">${obj[1].name}</div>
       <div class="champion-info-title">"${obj[1].title}"</div>
@@ -77,38 +52,36 @@ const printMainInfo = (div) => {
       <tr>
         <th>HP</th>
         <td>${obj[1].stats.hp} (+${obj[1].stats.hpperlevel} por nivel) </td>
-        </tr>
-        <tr>
+      </tr>
+      <tr>
         <th>MP</th>
         <td>${obj[1].stats.mp} (+${obj[1].stats.mpperlevel} por nivel)</td>
-        </tr>
-        <tr>
+      </tr>
+      <tr>
         <th>Armor</th>
         <td>${obj[1].stats.armor} (+${obj[1].stats.armorperlevel} por nivel)</td>
-        </tr>
-        <tr>
+      </tr>
+      <tr>
         <th>AD</th>
         <td>${obj[1].stats.attackdamage} (+${obj[1].stats.attackdamageperlevel} por nivel)</td>
-        </tr>
+      </tr>
       <tr>
         <th>HP reg</th>
         <td>${obj[1].stats.hpregen} (+${obj[1].stats.hpregenperlevel} por nivel)</td>
-        </tr>
+      </tr>
       <tr>
         <th>MP reg</th>
         <td>${obj[1].stats.mpregen} (+${obj[1].stats.mpregenperlevel} por nivel) </td>
       </tr>
       </table>
   `;
-            const divInfo = document.createElement('div');
-            divInfo.innerHTML = string;
-            divInfo.className = 'data-champ';
-            divInfo.id = 'data-champ';
-            infoChampion.appendChild(divInfo);
-            statInfoChart(obj);
-          }
-        });
-      });
+        const divInfo = document.createElement('div');
+        divInfo.innerHTML = string;
+        divInfo.className = 'data-champ';
+        infoChampion.appendChild(divInfo);
+        statInfoChart(obj);
+      }
+    });
     championsListElement.classList.add('hide');
     infoChampionPage.classList.remove('hide');
     navFilterAndSearch.classList.add('hide');
@@ -117,13 +90,13 @@ const printMainInfo = (div) => {
 };
 
 const statOfChamps = (arr) => {
-  minHp.innerHTML = lol.statOfChampions(arr, 'hp', 'min');
-  maxHp.innerHTML = lol.statOfChampions(arr, 'hp', 'max');
-  minAd.innerHTML = lol.statOfChampions(arr, 'ad', 'min');
-  maxAd.innerHTML = lol.statOfChampions(arr, 'ad', 'max');
+  document.getElementById('hp-min').innerHTML = lol.statOfChampions(arr, 'hp', 'min');
+  document.getElementById('hp-max').innerHTML = lol.statOfChampions(arr, 'hp', 'max');
+  document.getElementById('adchamp-min').innerHTML = lol.statOfChampions(arr, 'ad', 'min');
+  document.getElementById('adchamp-max').innerHTML = lol.statOfChampions(arr, 'ad', 'max');
 };
 
-const statInfoChart = obj => {
+const statInfoChart = (obj) => {
   const string = '<canvas id="chart-top" class="chart">';
   document.getElementById('champ-info').innerHTML = string;
   const ctx = document.getElementById('chart-top').getContext('2d');
@@ -155,45 +128,37 @@ const statInfoChart = obj => {
 const statChart = (stat) => {
   const string = '<canvas id="chart-top-stat" class="chart">';
   document.getElementById('stat-chart-champs').innerHTML = string;
-  fetch('data/lol/lol.json')
-    .then(res => res.json())
-    .then(championsData => {
-      const arr = Object.entries(championsData.data);
-      const arrOrder = arr.sort((first, second) => {
-        return second[1]['stats'][stat] - first[1]['stats'][stat];
-      });
-      const arrTop = arrOrder.map(obj => {
-        return obj[1]['stats'][stat];
-      }).slice(0, 5);
-      const champNames = arrOrder.map(obj => {
-        return obj[1]['name'];
-      }).slice(0, 5);
-      const ctx = document.getElementById('chart-top-stat').getContext('2d');
-      const chart = new Chart(ctx, {
-        type: 'horizontalBar',
-        data: {
-          labels: champNames,
-          datasets: [{
-            label: 'TOP 5 BY ' + stat.toUpperCase(),
-            data: arrTop,
-            backgroundColor: 'rgba(128, 81, 81, 0.397)',
-          // borderColor: 'blue',
-          // borderJoinStyle: 'miter',
-          // pointHitRadius: 10,
-          }]
-        },
-        options: {
-          scales: {
-            xAxes: [{
-              ticks: {
-                beginAtZero: true,
-              }
-            }]
+  const arrOrder = dataLol.sort((first, second) => {
+    return second[1]['stats'][stat] - first[1]['stats'][stat];
+  });
+  const arrTop = arrOrder.map(obj => {
+    return obj[1]['stats'][stat];
+  }).slice(0, 5);
+  const champNames = arrOrder.map(obj => {
+    return obj[1]['name'];
+  }).slice(0, 5);
+  const ctx = document.getElementById('chart-top-stat').getContext('2d');
+  const chart = new Chart(ctx, {
+    type: 'horizontalBar',
+    data: {
+      labels: champNames,
+      datasets: [{
+        label: 'TOP 5 BY ' + stat.toUpperCase(),
+        data: arrTop,
+        backgroundColor: 'rgba(128, 81, 81, 0.397)',
+      }]
+    },
+    options: {
+      scales: {
+        xAxes: [{
+          ticks: {
+            beginAtZero: true,
           }
-        }
-      });
-      return chart;
-    });
+        }]
+      }
+    }
+  });
+  return chart;
 };
 
 document.getElementById('btn-hp').addEventListener('click', () => {
@@ -202,53 +167,53 @@ document.getElementById('btn-hp').addEventListener('click', () => {
 document.getElementById('btn-mp').addEventListener('click', () => {
   statChart('mp');
 });
-document.getElementById('btn-ad').addEventListener('click', () => {
+document.getElementById('btn-adamage').addEventListener('click', () => {
   statChart('attackdamage');
 });
+
+const selectRoles = document.getElementById('rol');
+const sortChampions = document.getElementById('sort');
+const minNumber = document.getElementById('min-number');
+const maxNumber = document.getElementById('max-number');
+
 const funcFilterAndSort = () => {
-  fetch('data/lol/lol.json')
-    .then(res => res.json())
-    .then(championsData => {
-      const listOfChampions = Object.entries(championsData.data);
-      const arrNameAndImageOfChampions = lol.getNameAndImageOfChampion(listOfChampions);
-      let newChampionsArr = arrNameAndImageOfChampions;
-      if (selectRoles.value !== 'default') {
-        newChampionsArr = lol.filterChampionsRoles(selectRoles.value, arrNameAndImageOfChampions);
-        newChampionsArr = lol.sortChampionsCards(sortChampions.value, newChampionsArr);
-        newChampionsArr = lol.filterChampionsMana(newChampionsArr, minNumber.value, maxNumber.value);
-        statOfChamps(newChampionsArr);
-        printCardsOfChampions(newChampionsArr);
-        // statChart(newChampionsArr);
-      }
-      newChampionsArr = lol.sortChampionsCards(sortChampions.value, newChampionsArr);
-      newChampionsArr = lol.filterChampionsMana(newChampionsArr, minNumber.value, maxNumber.value);
-      statOfChamps(newChampionsArr);
-      printCardsOfChampions(newChampionsArr);
-      // statChart(newChampionsArr);
-    });
+  const arrNameAndImageOfChampions = lol.getNameAndImageOfChampion(dataLol);
+  let newChampionsArr = arrNameAndImageOfChampions;
+  newChampionsArr = lol.filterChampionsRoles(selectRoles.value, arrNameAndImageOfChampions);
+  newChampionsArr = lol.sortChampionsCards(sortChampions.value, newChampionsArr);
+  newChampionsArr = lol.filterChampionsMana(newChampionsArr, minNumber.value, maxNumber.value);
+  statOfChamps(newChampionsArr);
+  printCardsOfChampions(newChampionsArr);
 };
 
+
+selectRoles.addEventListener('change', funcFilterAndSort);
+sortChampions.addEventListener('change', funcFilterAndSort);
 maxNumber.addEventListener('change', funcFilterAndSort);
-maxNumber.addEventListener('keyup', funcFilterAndSort);
 minNumber.addEventListener('change', funcFilterAndSort);
+maxNumber.addEventListener('keyup', funcFilterAndSort);
 minNumber.addEventListener('keyup', funcFilterAndSort);
 
-selectRoles.addEventListener('input', funcFilterAndSort);
-sortChampions.addEventListener('input', funcFilterAndSort);
+const btnSearch = document.getElementById('btn-search');
+const search = document.getElementById('search');
+const navFilterAndSearch = document.getElementById('nav-filter-search');
+const asideStats = document.getElementById('aside');
 
 btnSearch.addEventListener('click', () => {
-  fetch('data/lol/lol.json')
-    .then(res => res.json())
-    .then(championsData => {
-      const listOfChampions = Object.entries(championsData.data);
-      const arrNameAndImageOfChampions = lol.getNameAndImageOfChampion(listOfChampions);
-      const searchChampions = arrNameAndImageOfChampions.filter((obj) => {
-        return obj.id === search.value;
-      });
-      printCardsOfChampions(searchChampions);
-    });
+  const arrNameAndImageOfChampions = lol.getNameAndImageOfChampion(dataLol);
+  const searchChampions = arrNameAndImageOfChampions.filter((obj) => {
+    return obj.id === search.value;
+  });
+  printCardsOfChampions(searchChampions);
 });
 
+const welcomePage = document.getElementById('welcome-pg');
+const tutPage = document.getElementById('tut-pg');
+const championsPage = document.getElementById('champions-pg');
+const statsPage = document.getElementById('stats-pg');
+const infoChampionPage = document.getElementById('info-champions-pg');
+
+const btnHome = document.getElementById('btn-home');
 btnHome.addEventListener('click', () => {
   welcomePage.classList.remove('hide');
   tutPage.classList.remove('hide');
@@ -257,6 +222,7 @@ btnHome.addEventListener('click', () => {
   statsPage.classList.add('hide');
 });
 
+const btnStats = document.getElementById('btn-stats');
 btnStats.addEventListener('click', () => {
   welcomePage.classList.add('hide');
   tutPage.classList.add('hide');
@@ -274,20 +240,16 @@ const funcHideAndShow = () => {
   infoChampionPage.classList.add('hide');
   navFilterAndSearch.classList.remove('hide');
   asideStats.classList.add('hide');
-  sortChampions.value = 'az';
-  selectRoles.value = 'default';
-  minNumber.value = 0;
-  maxNumber.value = 500;
+  document.getElementById('filter-form').reset();
+  printCardsOfChampions(dataLol);
   funcFilterAndSort();
 };
 
-btnChamps.addEventListener('click', funcHideAndShow);
-btnInit.addEventListener('click', funcHideAndShow);
-btnTut.addEventListener('click', funcHideAndShow);
-
-const funcHideAside = () => {
+document.getElementById('btn-champs').addEventListener('click', funcHideAndShow);
+document.getElementById('btn-init').addEventListener('click', funcHideAndShow);
+document.getElementById('btn-tut').addEventListener('click', funcHideAndShow);
+document.getElementById('btn-filter-sort').addEventListener('click', () => {
   asideStats.classList.toggle('hide');
-};
-btnFilterSort.addEventListener('click', funcHideAside);
+});
 
 
