@@ -6,7 +6,7 @@ const getJson = (datajson) => {
       return dataLol = Object.entries(total.data);
     });
 };
-getJson('data/lol/lol.json');
+getJson('https://kathmontalvo.github.io/LIM009-data-lovers/src/data/lol/lol.json');
 
 const championsListElement = document.getElementById('champions');
 const infoChampion = document.getElementById('info-champions');
