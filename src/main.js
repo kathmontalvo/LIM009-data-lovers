@@ -100,6 +100,7 @@ const statInfoChart = (obj) => {
   const string = '<canvas id="chart-top" class="chart">';
   document.getElementById('champ-info').innerHTML = string;
   const ctx = document.getElementById('chart-top').getContext('2d');
+  let Chart;
   const chart = new Chart(ctx, {
     type: 'radar',
     data: {
