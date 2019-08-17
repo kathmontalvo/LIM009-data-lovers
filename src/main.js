@@ -1,17 +1,21 @@
+// var Chart = require('chart.js');
+
 let dataLol = [];
 const getJson = (datajson) => {
   fetch(datajson)
     .then(response => response.json())
     .then(total => {
+      console.log(Object.entries(total.data))
       return dataLol = Object.entries(total.data);
     });
 };
-getJson('https://kathmontalvo.github.io/LIM009-data-lovers/src/data/lol/lol.json');
+getJson('https://kathmontalvo.github.io/Leaguefic/src/data/lol/lol.json');
 
 const championsListElement = document.getElementById('champions');
 const infoChampion = document.getElementById('info-champions');
 
 const printCardsOfChampions = (arrChampions) => {
+  console.log(arrChampions)
   championsListElement.innerHTML = '';
   arrChampions.forEach((obj) => {
     let string = `
@@ -24,11 +28,39 @@ const printCardsOfChampions = (arrChampions) => {
         </section>
         `;
     const div = document.createElement('div');
+    championsListElement.appendChild(div);
     div.innerHTML = string;
     div.className = 'card';
-    championsListElement.appendChild(div);
     printMainInfo(div);
   });
+};
+const statInfoChart = (obj) => {
+  const string = '<canvas id="chart-top" class="chart"></canvas>';
+  document.getElementById('champ-info').innerHTML = string;
+  const ctx = document.getElementById('chart-top').getContext('2d');
+  const chart = new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels: Object.keys(obj[1].info),
+      datasets: [{
+        label: 'my dataset',
+        data: Object.values(obj[1].info),
+        fill: true,
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: 'rgb(255, 99, 132)',
+      }]
+    },
+    options: {
+      scale: {
+        ticks: {
+          max: 10,
+          min: 0,
+          stepSize: 2
+        }
+      }
+    }
+  });
+  return chart;
 };
 const printMainInfo = (div) => {
   const printName = div.querySelector('[name=\'champs\']');
@@ -43,7 +75,7 @@ const printMainInfo = (div) => {
       <div class="champion-info-name">${obj[1].name}</div>
       <div class="champion-info-title">"${obj[1].title}"</div>
       <div class="champion-info-rol">Rol: ${obj[1].tags}</div>
-      <div id="champ-info" class="champ-info-">
+      <div id="champ-info" class="champ-info"></div>
       </section>
       <section class="info-stats">
       <div class="champ-descrip">Description:${obj[1].blurb}</div>
@@ -96,34 +128,7 @@ const statOfChamps = (arr) => {
   document.getElementById('adchamp-max').innerHTML = lol.statOfChampions(arr, 'ad', 'max');
 };
 
-const statInfoChart = (obj) => {
-  const string = '<canvas id="chart-top" class="chart">';
-  document.getElementById('champ-info').innerHTML = string;
-  const ctx = document.getElementById('chart-top').getContext('2d');
-  const chart = new Chart(ctx, {
-    type: 'radar',
-    data: {
-      labels: Object.keys(obj[1].info),
-      datasets: [{
-        label: 'my dataset',
-        data: Object.values(obj[1].info),
-        fill: true,
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor: 'rgb(255, 99, 132)',
-      }]
-    },
-    options: {
-      scale: {
-        ticks: {
-          max: 10,
-          min: 0,
-          stepSize: 2
-        }
-      }
-    }
-  });
-  return chart;
-};
+
 
 const statChart = (stat) => {
   const string = '<canvas id="chart-top-stat" class="chart">';
@@ -232,6 +237,7 @@ btnStats.addEventListener('click', () => {
   statChart('hp');
 });
 const funcHideAndShow = () => {
+  const data = lol.getNameAndImageOfChampion(dataLol)
   welcomePage.classList.add('hide');
   tutPage.classList.add('hide');
   statsPage.classList.add('hide');
@@ -241,7 +247,7 @@ const funcHideAndShow = () => {
   navFilterAndSearch.classList.remove('hide');
   asideStats.classList.add('hide');
   document.getElementById('filter-form').reset();
-  printCardsOfChampions(dataLol);
+  printCardsOfChampions(data);
   funcFilterAndSort();
 };
 
